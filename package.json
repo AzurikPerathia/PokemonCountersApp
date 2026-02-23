@@ -1,11 +1,42 @@
 {
-  "name": "pokemon-counters",
+  "name": "pokemon-counters-app",
   "version": "1.0.0",
+  "description": "Pokemon counters and chronometers app",
   "main": "main.js",
+  "author": "Azurik",
+  "license": "MIT",
+
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
+
   "devDependencies": {
-    "electron": "^28.2.0"
+    "electron": "^29.0.0",
+    "electron-builder": "^24.13.3"
+  },
+
+  "build": {
+    "appId": "com.azurik.pokemoncounters",
+    "productName": "Pokemon Counters App",
+
+    "directories": {
+      "output": "dist"
+    },
+
+    "files": [
+      "**/*"
+    ],
+
+    "win": {
+      "target": "nsis"
+    },
+
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
   }
 }
