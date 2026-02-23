@@ -1,367 +1,170 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Pokemon Counters</title>
-
 <style>
-@font-face {
-    font-family: 'Delfino';
-    src: url('./Delfino.ttf') format('truetype');
-}
+@font-face { font-family: 'Delfino'; src: url('./Delfino.ttf') format('truetype'); }
+* { box-sizing: border-box; }
+body { margin:0; padding:10px; background:#0b3d0b; font-family:Delfino,Arial,sans-serif; color:white; }
+h2 { text-align:center; margin:6px 0; font-size:28px; }
+.section { margin-bottom:12px; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
 
-body {
-    margin: 0;
-    padding: 8px;
-    background: #0b3d0b;
-    font-family: Delfino, Arial, sans-serif;
-}
+/* FAVORITES */
+.templates { background:#e8ffe8; border-radius:14px; padding:10px; margin-bottom:12px; color:black; }
+.templates h3 { text-align:center; font-size:22px; }
+.template-row { display:flex; gap:6px; margin-bottom:6px; }
+.template-row input { flex:1; font-size:16px; padding:4px; }
+.template-row button { font-size:16px; padding:6px 10px; border-radius:10px; border:none; cursor:pointer; }
 
-h2 {
-    text-align: center;
-    margin: 6px 0;
-    font-size: 28px;
-    color: white;
-}
+/* ACTIONS */
+.action-box { background:#e8ffe8; border-radius:14px; padding:10px; display:flex; justify-content:center; gap:20px; align-items:center; margin-bottom:12px; color:black; }
+.action-item { display:flex; align-items:center; gap:8px; font-size:20px; }
+.action-item button { width:54px; height:54px; font-size:28px; border-radius:14px; border:none; cursor:pointer; }
+.add-btn { background:#1db01d; color:black; }
+.delete-btn { background:#c62828; color:black; }
 
-.section { margin-bottom: 10px; }
+/* COUNTERS */
+.counter { background:#1db01d; border-radius:14px; padding:8px; min-height:155px; display:flex; flex-direction:row; align-items:center; gap:12px; box-shadow:2px 2px 10px rgba(0,0,0,0.3); transition:0.2s; cursor:pointer; }
+.counter.selected { box-shadow:0 0 15px 4px #ffd500; }
+.counter img { width:48px; height:48px; object-fit:contain; border-radius:6px; flex-shrink:0; }
+.counter-info { display:flex; flex-direction:column; align-items:center; flex:1; }
+.counter-name { border:none; background:rgba(255,255,255,0.8); text-align:center; font-size:22px; font-weight:bold; margin-bottom:4px; color:black; border-radius:6px; }
+.counter-value { text-align:center; font-size:42px; color:white; margin-bottom:6px; }
+.controls { display:flex; justify-content:center; gap:6px; align-items:center; flex-wrap:wrap; }
+.controls button { width:50px; height:50px; font-size:26px; border-radius:10px; border:none; cursor:pointer; background:white; color:black; }
+.controls .reset-counter-btn { background:#c62828; color:white; font-weight:bold; }
+.controls button:hover { background:#f0f0f0; }
+.cheat { width:70px; font-size:18px; text-align:center; border-radius:6px; border:none; }
+.link { font-size:18px; color:black; }
+.img-buttons { display:flex; flex-direction:column; align-items:center; gap:2px; margin-right:auto; }
+.img-buttons button { font-size:20px; cursor:pointer; }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-}
+/* TIMERS */
+.timer-container { display:flex; justify-content:space-around; margin-bottom:12px; flex-wrap:wrap; }
+.timer-box { background:white; border-radius:12px; padding:12px 20px; text-align:center; box-shadow:2px 2px 8px rgba(0,0,0,0.3); color:black; margin:6px; }
+.timer-name { color:#0050ff; font-size:20px; margin-bottom:4px; font-weight:bold; }
+.timer-value { color:#0050ff; font-size:28px; font-weight:bold; margin-bottom:6px; }
+.timer-box button { margin:2px; padding:6px 10px; border-radius:8px; border:none; cursor:pointer; font-weight:bold; }
+.timer-box button.start-btn { background:#1db01d; color:black; }
+.timer-box button.pause-btn { background:#ffd500; }
+.timer-box button.reset-btn { background:#c62828; color:white; }
+.timer-box button.settime-btn { background:#0050ff; color:white; }
+.timer-box button:hover { filter:brightness(0.9); }
 
-/* ===== COUNTERS ===== */
-.counter {
-    background: #1db01d;
-    border-radius: 14px;
-    padding: 6px;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.counter-name {
-    border: none;
-    background: transparent;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    color: black;
-}
-
-.counter-value {
-    text-align: center;
-    font-size: 44px;
-    color: white;
-}
-
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    align-items: center;
-}
-
-button {
-    width: 48px;
-    height: 48px;
-    font-size: 24px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-}
-
-.cheat {
-    width: 70px;
-    font-size: 18px;
-    text-align: center;
-}
-
-.link {
-    font-size: 16px;
-}
-
-/* ===== TIMERS ===== */
-.timer-box {
-    background: white;
-}
-
-.timer-name {
-    color: #0050ff;
-    font-size: 26px;
-    text-align: center;
-}
-
-.timer-value {
-    color: #0050ff;
-    font-size: 38px;
-    text-align: center;
-}
-
-/* ===== TEMPLATES ===== */
-.templates {
-    background: #e8ffe8;
-    border-radius: 12px;
-    padding: 8px;
-    margin-bottom: 10px;
-}
-
-.templates h3 {
-    text-align: center;
-    margin: 4px;
-    color: black;
-}
-
-.template-row {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 6px;
-}
-
-.template-row button {
-    width: auto;
-    padding: 6px 10px;
-    font-size: 16px;
-}
-
-.template-row input {
-    flex: 1;
-    font-size: 16px;
-}
+/* MODALS */
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; color:black; }
+.modal-content { background:#fff; border-radius:12px; padding:20px; min-width:280px; text-align:center; color:black; }
+.modal-content h3 { margin-top:0; margin-bottom:12px; color:black; }
+.modal-content p { font-size:14px; color:black; margin-top:6px; }
+.modal-content input { width:50px; margin:4px; text-align:center; color:black; border-radius:6px; border:1px solid #ccc; }
+.modal-content button { margin-top:12px; padding:6px 12px; border-radius:6px; border:none; cursor:pointer; background:#1db01d; color:black; font-weight:bold; }
+.modal-content button.cancel-btn { background:#c62828; margin-left:6px; color:white; }
 </style>
 </head>
-
 <body>
 
-<!-- ===== TEMPLATES ===== -->
 <div class="templates">
-<h3>Favoris / Templates</h3>
-
+<h3>Favorites / Templates</h3>
 <div class="template-row">
-    <input id="templateName" placeholder="Nom du template">
-    <button onclick="saveTemplate()">💾 Sauver</button>
+    <input id="templateName" placeholder="Template Name">
+    <button onclick="saveTemplate()">💾 Save</button>
 </div>
-
 <div id="templateList"></div>
+<div class="template-row">
+    <button onclick="exportCounters()">💾 Export JSON</button>
+    <input type="file" id="importFile" style="display:none" accept=".json" onchange="importCounters(event)">
+    <button onclick="document.getElementById('importFile').click()">📂 Import JSON</button>
+</div>
 </div>
 
-<!-- ===== CHRONOS ===== -->
-<div class="section">
-<h2>Chronomètres</h2>
-<div class="grid">
-
-<div class="counter timer-box">
-    <div class="timer-name">Chrono Y / M / D / H / M / S</div>
-    <div class="timer-value" id="timerFull">0y 0m 0d 00:00:00</div>
-    <div class="controls">
-        <button onclick="toggleTimer('full')">▶</button>
-        <button onclick="resetTimer('full')">⟲</button>
+<div class="action-box">
+    <div class="action-item">
+        <button class="add-btn" onclick="openAddCounterModal()">➕</button>
+        <span>Add Counter</span>
+    </div>
+    <div class="action-item">
+        <button class="delete-btn" onclick="deleteCounters()">🗑</button>
+        <span>Delete Counter</span>
     </div>
 </div>
 
-<div class="counter timer-box">
-    <div class="timer-name">Chrono D / H / M / S</div>
-    <div class="timer-value" id="timerShort">0d 00:00:00</div>
-    <div class="controls">
-        <button onclick="toggleTimer('short')">▶</button>
-        <button onclick="resetTimer('short')">⟲</button>
+<div class="timer-container">
+    <div class="timer-box">
+        <div class="timer-name">Full Timer</div>
+        <div class="timer-value" id="fullTimer">0Y/0M/0D 0H:0M:0S</div>
+        <button class="start-btn" onclick="startTimer('full')">Start</button>
+        <button class="pause-btn" onclick="pauseTimer('full')">Pause</button>
+        <button class="reset-btn" onclick="confirmReset('full')">Reset</button>
+        <button class="settime-btn" onclick="openSetTimeModal('full')">Set Time</button>
+    </div>
+    <div class="timer-box">
+        <div class="timer-name">Short Timer</div>
+        <div class="timer-value" id="shortTimer">0D/0H/0M/0S</div>
+        <button class="start-btn" onclick="startTimer('short')">Start</button>
+        <button class="pause-btn" onclick="pauseTimer('short')">Pause</button>
+        <button class="reset-btn" onclick="confirmReset('short')">Reset</button>
+        <button class="settime-btn" onclick="openSetTimeModal('short')">Set Time</button>
     </div>
 </div>
 
-</div>
-</div>
-
-<!-- ===== STATS ===== -->
 <div class="section">
-<h2>Stats Globale</h2>
+<h2>Global Stats</h2>
 <div class="grid" id="stats"></div>
 </div>
 
-<!-- ===== POKÉMON ===== -->
 <div class="section">
-<h2>Pokémon Catch</h2>
+<h2>Pokemon Catch</h2>
 <div class="grid" id="catch"></div>
 </div>
 
-<script>
-/* 🔒 CLÉ IMMUTABLE (NE JAMAIS CHANGER) */
-const STORAGE_KEY = "pokemonCounters_v1";
+<!-- Modals -->
+<div class="modal" id="resetCounterModal">
+    <div class="modal-content">
+        <h3>Confirm Reset Counter</h3>
+        <p>Do you really want to reset this counter?</p>
+        <p style="font-size:12px;">Other counters will not be affected.</p>
+        <button id="confirmResetCounterYes">Yes</button>
+        <button class="cancel-btn" onclick="closeResetCounterModal()">No</button>
+    </div>
+</div>
 
-/* ===== CHARGEMENT SAFE ===== */
-let store = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-store.counters ??= {};
-store.timers ??= {};
-store.templates ??= {};
-
-store.timers.full ??= { run:false, elapsed:0, last:0 };
-store.timers.short ??= { run:false, elapsed:0, last:0 };
-
-function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-}
-
-/* ===== COUNTERS ===== */
-let activeCounter = null;
-
-function createCounter(container, id, defaultName) {
-    if (!store.counters[id]) {
-        store.counters[id] = { value: 0, name: defaultName };
-    }
-
-    const el = document.createElement("div");
-    el.className = "counter";
-    el.onclick = () => activeCounter = id;
-
-    el.innerHTML = `
-        <input class="counter-name" value="${store.counters[id].name}"
-            onblur="rename('${id}', this.value)">
-        <div class="counter-value" id="v-${id}">${store.counters[id].value}</div>
-        <div class="controls">
-            <button onclick="event.stopPropagation();apply(-1)">−</button>
-            <button onclick="event.stopPropagation();apply(1)">+</button>
-            <input class="cheat" type="number" placeholder="Set"
-                onkeydown="cheat(event,'${id}')">
-            <label class="link">☑ <input type="checkbox" class="check" data-id="${id}"></label>
+<div class="modal" id="setTimeModal">
+    <div class="modal-content">
+        <h3>Set Timer</h3>
+        <div>
+            <input id="setY" placeholder="Y">
+            <input id="setM" placeholder="M">
+            <input id="setD" placeholder="D">
+            <input id="setH" placeholder="H">
+            <input id="setMin" placeholder="Min">
+            <input id="setS" placeholder="S">
         </div>
-    `;
-    container.appendChild(el);
-}
+        <button onclick="applySetTime()">Apply</button>
+        <button class="cancel-btn" onclick="closeSetTimeModal()">Cancel</button>
+    </div>
+</div>
 
-function getTargets() {
-    const checked = [...document.querySelectorAll(".check:checked")].map(c => c.dataset.id);
-    return checked.length ? checked : (activeCounter ? [activeCounter] : []);
-}
+<div class="modal" id="addCounterModal">
+    <div class="modal-content">
+        <h3>Add Counter</h3>
+        <p>Choose target:</p>
+        <button onclick="confirmAddCounter('stats')">Stats</button>
+        <button onclick="confirmAddCounter('catch')">Catch</button>
+        <button class="cancel-btn" onclick="closeAddCounterModal()">Cancel</button>
+    </div>
+</div>
 
-function apply(delta) {
-    getTargets().forEach(id => {
-        store.counters[id].value = Math.max(0, store.counters[id].value + delta);
-        document.getElementById("v-" + id).textContent = store.counters[id].value;
-    });
-    save();
-}
-
-function cheat(e, id) {
-    if (e.key === "Enter") {
-        store.counters[id].value = Math.max(0, parseInt(e.target.value) || 0);
-        document.getElementById("v-" + id).textContent = store.counters[id].value;
-        e.target.value = "";
-        save();
+<script src="script.js"></script>
+<script>
+/* ===== CONFIRM RESET TIMER ===== */
+function confirmReset(name){
+    if(confirm("Do you really want to reset this timer?")){
+        store.timers[name]=0;
+        updateTimerDisplay(name);
     }
-}
-
-function rename(id, val) {
-    store.counters[id].name = val;
-    save();
-}
-
-/* ===== KEYBOARD ===== */
-document.addEventListener("keydown", e => {
-    if (e.key === "+" || e.key === "=") apply(1);
-    if (e.key === "-" || e.key === "_") apply(-1);
-});
-
-/* ===== TEMPLATES ===== */
-function saveTemplate() {
-    const name = templateName.value.trim();
-    if (!name) return;
-    store.templates[name] = [...document.querySelectorAll(".check:checked")].map(c => c.dataset.id);
-    templateName.value = "";
-    save();
-    renderTemplates();
-}
-
-function applyTemplate(name) {
-    document.querySelectorAll(".check").forEach(c => c.checked = false);
-    store.templates[name].forEach(id => {
-        const el = document.querySelector(`.check[data-id="${id}"]`);
-        if (el) el.checked = true;
-    });
-}
-
-function deleteTemplate(name) {
-    delete store.templates[name];
-    save();
-    renderTemplates();
-}
-
-function renderTemplates() {
-    templateList.innerHTML = "";
-    Object.keys(store.templates).forEach(name => {
-        const row = document.createElement("div");
-        row.className = "template-row";
-        row.innerHTML = `
-            <button onclick="applyTemplate('${name}')">⭐ ${name}</button>
-            <button onclick="deleteTemplate('${name}')">🗑</button>
-        `;
-        templateList.appendChild(row);
-    });
-}
-
-/* ===== TIMERS ===== */
-let intervals = {};
-
-function format(ms, full) {
-    let s = Math.floor(ms / 1000);
-    let y = Math.floor(s / 31536000); s %= 31536000;
-    let mo = Math.floor(s / 2592000); s %= 2592000;
-    let d = Math.floor(s / 86400); s %= 86400;
-    let h = String(Math.floor(s / 3600)).padStart(2, "0");
-    let m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
-    let se = String(s % 60).padStart(2, "0");
-    return full ? `${y}y ${mo}m ${d}d ${h}:${m}:${se}` : `${d}d ${h}:${m}:${se}`;
-}
-
-function updateTimer(t) {
-    const o = store.timers[t];
-    const v = o.elapsed + (o.run ? Date.now() - o.last : 0);
-    document.getElementById(t === "full" ? "timerFull" : "timerShort").textContent =
-        format(v, t === "full");
-}
-
-function toggleTimer(t) {
-    const o = store.timers[t];
-    if (o.run) {
-        o.elapsed += Date.now() - o.last;
-        o.run = false;
-        clearInterval(intervals[t]);
-    } else {
-        o.run = true;
-        o.last = Date.now();
-        intervals[t] = setInterval(() => updateTimer(t), 500);
-    }
-    save();
-}
-
-function resetTimer(t) {
-    store.timers[t] = { run:false, elapsed:0, last:0 };
-    updateTimer(t);
-    save();
-}
-
-/* ===== INIT ===== */
-renderTemplates();
-["full","short"].forEach(t => {
-    updateTimer(t);
-    if (store.timers[t].run) {
-        store.timers[t].last = Date.now();
-        intervals[t] = setInterval(() => updateTimer(t), 500);
-    }
-});
-
-const stats = document.getElementById("stats");
-createCounter(stats, "shiny", "Total Shiny Encounters");
-createCounter(stats, "total", "Total Encounters");
-createCounter(stats, "phase", "Phase Encounters");
-
-const c = document.getElementById("catch");
-for (let i = 1; i <= 10; i++) {
-    createCounter(c, "p" + i + "_phase", "Phase " + i);
-    createCounter(c, "p" + i + "_total", "Total " + i);
 }
 </script>
-
 </body>
 </html>
