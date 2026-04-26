@@ -1,0 +1,37 @@
+body { margin:0; padding:10px; background:#0b3d0b; font-family:Delfino, Arial, sans-serif; }
+h2 { text-align:center; margin:6px 0; font-size:28px; color:white; }
+.section { margin-bottom:12px; }
+.grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; }
+
+/* TIMERS */
+.timers { display:flex; justify-content:center; gap:15px; margin-bottom:15px; }
+.timer-box { background:white; border-radius:10px; padding:10px 15px; text-align:center; width:200px; }
+.timer-name { font-size:18px; color:#0050ff; margin-bottom:5px; }
+.timer-value { font-size:20px; color:#0050ff; font-weight:bold; margin-bottom:5px; }
+.timer-controls button { margin:0 3px; padding:4px 8px; font-size:14px; cursor:pointer; }
+
+/* TEMPLATES */
+.templates { background:#e8ffe8; border-radius:14px; padding:10px; margin-bottom:12px; }
+.templates h3 { text-align:center; color:black; font-size:22px; }
+.template-row { display:flex; gap:6px; margin-bottom:6px; }
+.template-row input { flex:1; font-size:16px; }
+.template-row button { font-size:16px; padding:6px 10px; border-radius:10px; border:none; cursor:pointer; }
+
+/* ACTIONS */
+.action-box { background:#e8ffe8; border-radius:14px; padding:10px; display:flex; justify-content:center; gap:20px; align-items:center; margin-bottom:12px; }
+.action-item { display:flex; align-items:center; gap:8px; color:black; font-size:20px; }
+.action-item button { width:54px; height:54px; font-size:28px; border-radius:14px; border:none; cursor:pointer; }
+.add-btn { background:#1db01d; color:black; }
+.delete-btn { background:#c62828; color:black; }
+
+/* COUNTERS */
+.counter { background:#1db01d; border-radius:14px; padding:8px; height:240px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:5px; text-align:center; }
+.counter-name { border:none; background:transparent; font-size:22px; font-weight:bold; color:black; text-align:center; width:100%; }
+.counter-value { font-size:42px; color:white; margin:5px 0; }
+.controls { display:flex; justify-content:center; gap:6px; align-items:center; }
+.controls button { width:46px; height:46px; font-size:26px; border-radius:10px; border:none; cursor:pointer; }
+.cheat { width:70px; font-size:18px; text-align:center; }
+.link { font-size:18px; color:black; }
+.counter img { max-width:80px; max-height:80px; border-radius:10px; object-fit:contain; }
+.counter .img-buttons { display:flex; justify-content:center; gap:5px; margin-bottom:5px; }
+.counter .img-buttons button { font-size:18px; padding:4px 6px; border-radius:6px; border:none; cursor:pointer; }
